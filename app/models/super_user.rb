@@ -3,7 +3,7 @@ class SuperUser
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable#, :validatable, :omniauthable
+         :recoverable, :rememberable, :trackable, :validatable#, :omniauthable
 
   field :username, type: String, default: ""
 
@@ -36,29 +36,25 @@ class SuperUser
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
 
-  field :provider, type: String
-  field :uid, type: String
 
-  embeds_one :article
+  embeds_many :identities
+
+  ##callbacks
 
   # add_index :devise, :provider
   # add_index :devise, :uid
   # add_index :devise, [:provider, :uid], unique: true
 
 
-  validates :uid, presence: true, uniqueness: true
-
-
-
-
   def self.from_omniauth(auth)
     params = auth.slice(:provider, :uid)
-    u =  SuperUser.find_or_create_by(provider: params.provider, uid: params.uid) do |user|
+    u = SuperUser.find_or_create_by(email: auth.info.email) do |user|
+      o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+      string = (0...10).map { o[rand(o.length)] }.join
       user.username = auth.info.name
+      user.password = string
       user.email = auth.info.email
-      user.provider = auth.provider
-      user.uid = auth.uid
-
+      user.identities.new(uid: auth.uid, provider: auth.provider)
     end
     return  u
   end
@@ -76,8 +72,13 @@ class SuperUser
   end
 
 
-  def password_required?
-    super && provider.blank?
-  end
-
+  # def password_required?
+  #   super && provider.blank?
+  # end
+  #
+  # private
+  #
+  # def create_identities(auth)
+  #   self.identities.new(uid: auth.uid, provider: auth.provider)
+  # end
 end

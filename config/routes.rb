@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
+  
+  get '/auth/google_oauth2/callback', to: 'authentications#create'
 
-
-  get "/users/auth/google_oauth2/callback", to: 'user_authentications#create'
-  get "/super_users/auth/google_oauth2/callback", to: 'super_user_authentications#create'
   devise_for :super_users, :controllers => { sessions: 'super_users/sessions'}
-  devise_for :users
+  devise_for :users#, controllers: {omniauth_callbacks: 'omniauth_callbacks' }
   resources :articles do
     get :avatar, on: :member
   end
+
+  resources :welcomes
+  resources :admins
 
   root 'welcomes#index'
 

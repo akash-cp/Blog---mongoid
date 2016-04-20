@@ -6,6 +6,17 @@ GIT
       mime-types (>= 1.0, < 3.0)
       mongoid (>= 3.0, < 6.0)
 
+GIT
+  remote: https://github.com/zquestz/omniauth-google-oauth2
+  revision: b20d6b0eeeb8976da5dd82b91bd698b9ca633971
+  branch: master
+  specs:
+    omniauth-google-oauth2 (0.4.1)
+      jwt (~> 1.5.2)
+      multi_json (~> 1.3)
+      omniauth (>= 1.1.1)
+      omniauth-oauth2 (>= 1.3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -134,12 +145,7 @@ GEM
     omniauth (1.3.1)
       hashie (>= 1.2, < 4)
       rack (>= 1.0, < 3)
-    omniauth-google-oauth2 (0.4.1)
-      jwt (~> 1.5.2)
-      multi_json (~> 1.3)
-      omniauth (>= 1.1.1)
-      omniauth-oauth2 (>= 1.3.1)
-    omniauth-oauth2 (1.4.0)
+    omniauth-oauth2 (1.3.1)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     optionable (0.2.0)
@@ -232,7 +238,9 @@ DEPENDENCIES
   mini_magick
   mongoid (~> 4.0.2)
   mongoid-grid_fs!
-  omniauth-google-oauth2
+  omniauth
+  omniauth-google-oauth2!
+  omniauth-oauth2 (~> 1.3.1)
   rails (= 4.2.6)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

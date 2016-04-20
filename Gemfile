@@ -46,7 +46,10 @@ gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
 gem 'devise'
 
 #omniauth-google
-gem 'omniauth-google-oauth2'
+gem 'omniauth-google-oauth2', :git => 'https://github.com/zquestz/omniauth-google-oauth2', :branch => 'master'
+gem 'omniauth-oauth2', '~> 1.3.1'
+gem 'omniauth'
+
 
 #fontawesome
 gem 'font-awesome-rails'

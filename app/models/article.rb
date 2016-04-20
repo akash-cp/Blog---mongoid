@@ -12,5 +12,5 @@ class Article
   validates :date, presence: true
 
 
- # embedded_in :user
+ embedded_in :user
 end
